@@ -1,5 +1,16 @@
-import os
-os.environ["IMAGEIO_FFMPEG_EXE"] = "\Users\167818\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ffmpeg"
+from pathlib import Path
 from moviepy.editor import VideoFileClip
-videoClip = VideoFileClip("4CH.mp4")
-videoClip.write_gif("4CH.gif")
+
+cwd = Path(".")
+files = cwd.glob("*.mp4")
+file_names = []
+
+for file in files:
+    file_name = str(file)
+    #file_name_short = file_name[:-4]
+    file_names.append(file_name)
+
+for file_name in file_names:
+    #convert_video(file_name)
+    videoClip = VideoFileClip(file_name)
+    videoClip.write_gif(file_name[:-4] + ".gif",fps=videoClip.fps,program="ffmpeg")
